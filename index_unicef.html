@@ -908,7 +908,7 @@ td .cv.bad.pend:hover{filter:brightness(.85)}
 //# sourceMappingURL=leaflet.js.map</script>
 <script>
 const DB={"order":["unicef"],"sheets":{"unicef":{"kind":"fed","name":"UNICEF","cols":[[296817,"3512 MARIA PARADO DE BELLIDO","CARABAYLLO","LIMA",4,"LIMA","SEDAPAL",null,"Otro","Inadecuada cloración externa"],[332943,"2003 LIBERTADOR JOSE DE SAN MARTIN","SAN MARTIN DE PORRES","LIMA",4,"LIMA","SEDAPAL",null,null,null],[333122,"2031 VIRGEN DE FATIMA","SAN MARTIN DE PORRES","LIMA",4,"LIMA","SEDAPAL",null,null,null],[333339,"3033 ANDRES AVELINO CACERES","SAN MARTIN DE PORRES","LIMA",4,"LIMA","SEDAPAL",null,null,null]],"cv":[[0.05,0.05,0,-11.76541,-76.97632,2026,350989,16.8,15.7,55136],[0.75,0.75,0,-12.00613,-77.09074,2026,704999,13.3,3.8,26892],[0.91,0.91,0,-11.9878,-77.09221,2026,704999,13.3,3.8,26892],[0.88,0.88,0,-12.03584,-77.08605,2026,704999,13.3,3.8,26892]],"mes":[],"regions":["Norte","Centro","Sur","Oriente","Lima Metropolitana","Callao"],"dptos":["LIMA"],"meta":5,"hasMon":false,"poblacion":null,"di_meses":"Set","ult_meses":"Set"}}}, SHEETS=DB.sheets, ORDER=DB.order;
-const TABLABEL={todos:'Todos',pecas:'PECAS',pae:'PAE',magdalena:'Muni. Magdalena',midisfed:'GOREs (FED)',ipc:'Incluir para Crecer',unicef:'UNICEF',worldvision:'World Vision'};
+const TABLABEL={todos:'Todos',pecas:'PECAS',pae:'PAE',magdalena:'Muni. Magdalena',midisfed:'GOREs (FED)',ipc:'Incluir para Crecer',unicef:'UNICEF',worldvision:'World Vision',micas:'MICAS'};
 const ACC='#1569c7',DX='#d03b3b';
 const $=id=>document.getElementById(id);
 const pctS=(a,b)=>(b>0?a/b*100:0).toFixed(1).replace('.',',')+'%';
@@ -1081,7 +1081,7 @@ function renderFED(sch){
 }
 
 function cvCell(v){if(v==null)return '<span style="color:var(--muted)">—</span>';return `<span class="cv ${v<0.5?'bad':'ok'}">${fmt2(v)}</span>`;}
-function razonCell(i){const r=cRazon(i);if(!r)return '<span style="color:var(--muted)">—</span>';const d=cDetalle(i);const t=d?` title="${String(d).replace(/"/g,'&quot;')}"`:'';return `<span class="razon"${t}>${r}</span>`;}
+function razonCell(i){const r=cRazon(i);const d=cDetalle(i);if(!r)return '<span style="color:var(--muted)">—</span>';const t=d?` title="${String(d).replace(/"/g,'&quot;')}"`:'';const esOtro=r&&r.trim().toLowerCase()==='otro';if(esOtro&&d){const dc=d.length>90?d.slice(0,90).trim()+'…':d;return `<span class="razon"${t}>${dc}</span>`;}if(d){const dc=d.length>60?d.slice(0,60).trim()+'…':d;return `<span class="razon"${t}>${r} <span style="color:var(--ink-2);font-weight:400;font-size:12px">(${dc})</span></span>`;}return `<span class="razon"${t}>${r}</span>`;}
 function estBadge(v){if(v==null)return `<span class="badge nd">—</span>`;return v>=0.5?`<span class="badge ok">Adecuado</span>`:`<span class="badge bad">Inadecuado</span>`;}
 
 function limpTxt(y){return y>=2021?(''+y):(y===0?'Año anterior':'Sin registro');}
